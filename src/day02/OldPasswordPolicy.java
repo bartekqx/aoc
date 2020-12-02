@@ -16,7 +16,10 @@ class OldPasswordPolicy implements PasswordPolicy {
     public boolean isValid(String password) {
         int letterCnt = 0;
         for (int i = 0; i < password.length(); i++) {
-            if (password.charAt(i) ==letter ) {
+            if (letterCnt > maxTimes) {
+                return false;
+            }
+            if (password.charAt(i) == letter) {
                 letterCnt++;
             }
         }
