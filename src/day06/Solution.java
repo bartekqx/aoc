@@ -21,7 +21,7 @@ public class Solution {
 
         long sum = 0;
         for (String line : input) {
-            if (line.equals("")) {
+            if (line.isEmpty()) {
                 sum += set.size();
                 set.clear();
             }
@@ -41,7 +41,7 @@ public class Solution {
         long groupSize = 0;
 
         for (String line : input) {
-            if (line.equals("")) {
+            if (line.isEmpty()) {
                 sum += countYesAnswers(map, groupSize);
                 map.clear();
                 groupSize = 0;
@@ -58,9 +58,9 @@ public class Solution {
     }
 
     private static long countYesAnswers(Map<Character, Long> map, long groupSize) {
-        return map.keySet()
+        return map.values()
                 .stream()
-                .filter(k -> map.get(k) == groupSize)
+                .filter(v -> v == groupSize)
                 .count();
     }
 }
