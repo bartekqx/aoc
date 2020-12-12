@@ -28,27 +28,22 @@ public class Solution {
             seats = temp;
         }
 
-        int ctr = 0;
-        for (char[] seat : seats) {
-            for (char c : seat) {
-                if (c == '#') {
-                    ctr++;
-                }
-            }
-        }
-
-        return ctr;
+        return countOccupiedSeats(seats);
     }
 
     private static long part1(char[][] seats) {
 
         boolean isSame = false;
         while (!isSame) {
-            char[][] temp = updateSeats(seats);
+            char[][] temp = updateSeats1(seats);
             isSame = seatsAreSame(temp, seats);
             seats = temp;
         }
 
+        return countOccupiedSeats(seats);
+    }
+
+    private static int countOccupiedSeats(char[][] seats) {
         int ctr = 0;
         for (char[] seat : seats) {
             for (char c : seat) {
@@ -57,7 +52,6 @@ public class Solution {
                 }
             }
         }
-
         return ctr;
     }
 
@@ -72,7 +66,7 @@ public class Solution {
         return true;
     }
 
-    private static char[][] updateSeats(char[][] seats) {
+    private static char[][] updateSeats1(char[][] seats) {
 
         final char[][] updatedSeats = new char[seats.length][seats[0].length];
 
@@ -82,7 +76,7 @@ public class Solution {
                 char c = seats[i][j];
 
                 switch (c) {
-                    case 'L' -> {
+                    case 'L' :
                         boolean occupied = false;
                         for (int iOff = -1; iOff < 2; iOff++) {
                             if (occupied) {
@@ -106,8 +100,8 @@ public class Solution {
                             }
                         }
                         updatedSeats[i][j] = occupied ? 'L' : '#';
-                    }
-                    case '#' -> {
+                    break;
+                    case '#' :
                         int occupiedCtr = 0;
                         for (int iOff = -1; iOff < 2; iOff++) {
                             if (occupiedCtr >= 4) {
@@ -130,8 +124,10 @@ public class Solution {
                             }
                         }
                         updatedSeats[i][j] = occupiedCtr >= 4 ? 'L' : '#';
-                    }
-                    default -> updatedSeats[i][j] = '.';
+                        break;
+                    default :
+                        updatedSeats[i][j] = '.';
+                        break;
                 }
             }
         }
@@ -148,7 +144,7 @@ public class Solution {
                 char c = seats[i][j];
 
                 switch (c) {
-                    case 'L' -> {
+                    case 'L' :
                         boolean occupied = false;
                         for (int iOff = -1; iOff < 2; iOff++) {
                             if (occupied) {
@@ -167,8 +163,12 @@ public class Solution {
                                     int iOffScale = iOff * k;
                                     int jOffScale = jOff * k;
 
-                                    if(i + iOffScale < 0 || j + jOffScale < 0 || i + iOffScale >= updatedSeats.length || j + jOffScale >= updatedSeats[i].length)
+                                    if(i + iOffScale < 0 ||
+                                            j + jOffScale < 0 ||
+                                            i + iOffScale >= updatedSeats.length ||
+                                            j + jOffScale >= updatedSeats[i].length) {
                                         continue;
+                                    }
 
                                     char charAt = seats[i + iOffScale][j + jOffScale];
 
@@ -183,8 +183,8 @@ public class Solution {
                             }
                         }
                         updatedSeats[i][j] = occupied ? 'L' : '#';
-                    }
-                    case '#' -> {
+                    break;
+                    case '#' :
                         int occupiedCtr = 0;
                         for (int iOff = -1; iOff < 2; iOff++) {
                             for (int jOff = -1; jOff < 2; jOff++) {
@@ -196,8 +196,12 @@ public class Solution {
                                     int iOffScale = iOff * k;
                                     int jOffScale = jOff * k;
 
-                                    if(i + iOffScale < 0 || j + jOffScale < 0 || i + iOffScale >= updatedSeats.length || j + jOffScale >= updatedSeats[i].length)
+                                    if(i + iOffScale < 0 ||
+                                            j + jOffScale < 0 ||
+                                            i + iOffScale >= updatedSeats.length ||
+                                            j + jOffScale >= updatedSeats[i].length) {
                                         continue;
+                                    }
 
                                     char charAt = seats[i + iOffScale][j + jOffScale];
 
@@ -212,8 +216,10 @@ public class Solution {
                             }
                         }
                         updatedSeats[i][j] = occupiedCtr >= 5 ? 'L' : '#';
-                    }
-                    default -> updatedSeats[i][j] = '.';
+                    break;
+                default :
+                    updatedSeats[i][j] = '.';
+                    break;
                 }
             }
         }
